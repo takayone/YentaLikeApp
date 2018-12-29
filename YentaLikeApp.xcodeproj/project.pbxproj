@@ -8,20 +8,44 @@
 
 /* Begin PBXBuildFile section */
 		306689CC21D781DD00263580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689CB21D781DD00263580 /* AppDelegate.swift */; };
-		306689CE21D781DD00263580 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689CD21D781DD00263580 /* ViewController.swift */; };
 		306689D121D781DD00263580 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 306689CF21D781DD00263580 /* Main.storyboard */; };
 		306689D321D781DE00263580 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306689D221D781DE00263580 /* Assets.xcassets */; };
 		306689D621D781DE00263580 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 306689D421D781DE00263580 /* LaunchScreen.storyboard */; };
+		306689DE21D7832900263580 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 306689DD21D7832800263580 /* GoogleService-Info.plist */; };
+		306689E021D7846E00263580 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689DF21D7846E00263580 /* MainTabBarController.swift */; };
+		306689E321D78A8300263580 /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689E221D78A8300263580 /* SwipeController.swift */; };
+		306689E821D78B8200263580 /* Extensions + views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689E721D78B8200263580 /* Extensions + views.swift */; };
+		306689EA21D78C1900263580 /* BottomStackViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689E921D78C1900263580 /* BottomStackViews.swift */; };
+		306689EC21D793F600263580 /* SwipeResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689EB21D793F600263580 /* SwipeResultView.swift */; };
+		306689EF21D7980F00263580 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689EE21D7980F00263580 /* User.swift */; };
+		306689F421D799E900263580 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F321D799E900263580 /* RegistrationController.swift */; };
+		306689F621D79BDD00263580 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F521D79BDD00263580 /* CustomTextField.swift */; };
+		306689F821D79F7D00263580 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F721D79F7D00263580 /* LoginController.swift */; };
+		306689FA21D7AA4700263580 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F921D7AA4700263580 /* CardView.swift */; };
+		73A8B953758A193FC5FAA838 /* Pods_YentaLikeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E22BE76410D8361B68AE029 /* Pods_YentaLikeApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		306689C821D781DD00263580 /* YentaLikeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YentaLikeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		306689CB21D781DD00263580 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		306689CD21D781DD00263580 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		306689D021D781DD00263580 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		306689D221D781DE00263580 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		306689D521D781DE00263580 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		306689D721D781DE00263580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		306689DD21D7832800263580 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		306689DF21D7846E00263580 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		306689E221D78A8300263580 /* SwipeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeController.swift; sourceTree = "<group>"; };
+		306689E721D78B8200263580 /* Extensions + views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions + views.swift"; sourceTree = "<group>"; };
+		306689E921D78C1900263580 /* BottomStackViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomStackViews.swift; sourceTree = "<group>"; };
+		306689EB21D793F600263580 /* SwipeResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeResultView.swift; sourceTree = "<group>"; };
+		306689EE21D7980F00263580 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		306689F321D799E900263580 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
+		306689F521D79BDD00263580 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		306689F721D79F7D00263580 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		306689F921D7AA4700263580 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		449D30EB4661E74998B2C4F7 /* Pods-YentaLikeApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YentaLikeApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YentaLikeApp/Pods-YentaLikeApp.debug.xcconfig"; sourceTree = "<group>"; };
+		8E22BE76410D8361B68AE029 /* Pods_YentaLikeApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YentaLikeApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		94D342C9A48DB0B27FFAD1D7 /* Pods-YentaLikeApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YentaLikeApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-YentaLikeApp/Pods-YentaLikeApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73A8B953758A193FC5FAA838 /* Pods_YentaLikeApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +65,8 @@
 			children = (
 				306689CA21D781DD00263580 /* YentaLikeApp */,
 				306689C921D781DD00263580 /* Products */,
+				5C2A4469EF863590650566DF /* Pods */,
+				E0A323567153FC18C4DBD673 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +81,89 @@
 		306689CA21D781DD00263580 /* YentaLikeApp */ = {
 			isa = PBXGroup;
 			children = (
+				306689ED21D797FD00263580 /* Models */,
+				306689E621D78B5F00263580 /* Extensions */,
+				306689F021D7996F00263580 /* RegistrationLogin */,
+				306689E121D78A5900263580 /* Swipe */,
+				306689DF21D7846E00263580 /* MainTabBarController.swift */,
 				306689CB21D781DD00263580 /* AppDelegate.swift */,
-				306689CD21D781DD00263580 /* ViewController.swift */,
 				306689CF21D781DD00263580 /* Main.storyboard */,
 				306689D221D781DE00263580 /* Assets.xcassets */,
 				306689D421D781DE00263580 /* LaunchScreen.storyboard */,
 				306689D721D781DE00263580 /* Info.plist */,
+				306689DD21D7832800263580 /* GoogleService-Info.plist */,
 			);
 			path = YentaLikeApp;
+			sourceTree = "<group>";
+		};
+		306689E121D78A5900263580 /* Swipe */ = {
+			isa = PBXGroup;
+			children = (
+				306689E521D78B3E00263580 /* Views */,
+				306689E421D78B2F00263580 /* Controllers */,
+			);
+			path = Swipe;
+			sourceTree = "<group>";
+		};
+		306689E421D78B2F00263580 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				306689E221D78A8300263580 /* SwipeController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		306689E521D78B3E00263580 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				306689E921D78C1900263580 /* BottomStackViews.swift */,
+				306689EB21D793F600263580 /* SwipeResultView.swift */,
+				306689F921D7AA4700263580 /* CardView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		306689E621D78B5F00263580 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				306689E721D78B8200263580 /* Extensions + views.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		306689ED21D797FD00263580 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				306689EE21D7980F00263580 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		306689F021D7996F00263580 /* RegistrationLogin */ = {
+			isa = PBXGroup;
+			children = (
+				306689F321D799E900263580 /* RegistrationController.swift */,
+				306689F521D79BDD00263580 /* CustomTextField.swift */,
+				306689F721D79F7D00263580 /* LoginController.swift */,
+			);
+			path = RegistrationLogin;
+			sourceTree = "<group>";
+		};
+		5C2A4469EF863590650566DF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				449D30EB4661E74998B2C4F7 /* Pods-YentaLikeApp.debug.xcconfig */,
+				94D342C9A48DB0B27FFAD1D7 /* Pods-YentaLikeApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E0A323567153FC18C4DBD673 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8E22BE76410D8361B68AE029 /* Pods_YentaLikeApp.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +173,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 306689DA21D781DE00263580 /* Build configuration list for PBXNativeTarget "YentaLikeApp" */;
 			buildPhases = (
+				D7AEF73C438E8D4609E828CE /* [CP] Check Pods Manifest.lock */,
 				306689C421D781DD00263580 /* Sources */,
 				306689C521D781DD00263580 /* Frameworks */,
 				306689C621D781DD00263580 /* Resources */,
+				34A819BBBC3F568E16634312 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -123,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				306689D621D781DE00263580 /* LaunchScreen.storyboard in Resources */,
+				306689DE21D7832900263580 /* GoogleService-Info.plist in Resources */,
 				306689D321D781DE00263580 /* Assets.xcassets in Resources */,
 				306689D121D781DD00263580 /* Main.storyboard in Resources */,
 			);
@@ -130,13 +235,91 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		34A819BBBC3F568E16634312 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-YentaLikeApp/Pods-YentaLikeApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YentaLikeApp/Pods-YentaLikeApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7AEF73C438E8D4609E828CE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YentaLikeApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		306689C421D781DD00263580 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				306689CE21D781DD00263580 /* ViewController.swift in Sources */,
+				306689EA21D78C1900263580 /* BottomStackViews.swift in Sources */,
+				306689E821D78B8200263580 /* Extensions + views.swift in Sources */,
+				306689EC21D793F600263580 /* SwipeResultView.swift in Sources */,
+				306689E021D7846E00263580 /* MainTabBarController.swift in Sources */,
 				306689CC21D781DD00263580 /* AppDelegate.swift in Sources */,
+				306689E321D78A8300263580 /* SwipeController.swift in Sources */,
+				306689F421D799E900263580 /* RegistrationController.swift in Sources */,
+				306689EF21D7980F00263580 /* User.swift in Sources */,
+				306689F621D79BDD00263580 /* CustomTextField.swift in Sources */,
+				306689FA21D7AA4700263580 /* CardView.swift in Sources */,
+				306689F821D79F7D00263580 /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +463,7 @@
 		};
 		306689DB21D781DE00263580 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 449D30EB4661E74998B2C4F7 /* Pods-YentaLikeApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -298,6 +482,7 @@
 		};
 		306689DC21D781DE00263580 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94D342C9A48DB0B27FFAD1D7 /* Pods-YentaLikeApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
