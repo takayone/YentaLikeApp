@@ -18,6 +18,7 @@ class CustomTextField: UITextField {
         self.height = height
         super.init(frame: .zero)
         layer.cornerRadius = height / 2
+        font = UIFont.systemFont(ofSize: 16, weight: .light)
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {

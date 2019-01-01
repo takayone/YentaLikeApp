@@ -119,24 +119,24 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
     
   
     //usersDetailsControllerでlikeもしくはdislikeをした時の挙動
-    func didTapLike() {
+    func didTapLike(user: User) {
         
         self.navigationController?.popViewController(animated: true)
         
         UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
-//            self.didFinishSwiping(translationDirection: 1, user: <#User#>)
+            self.didFinishSwiping(translationDirection: 1, user: user)
         }) { (_) in
         }
         
     }
     
-    func didTapDislike() {
+    func didTapDislike(user: User) {
         //ここでdisLikeのパフォームをさせたいけどどうするか？
         //statusBarの色付け
         self.navigationController?.popViewController(animated: true)
         
         UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
-//            self.didFinishSwiping(translationDirection: -1, user: <#User#>)
+            self.didFinishSwiping(translationDirection: -1, user: user)
         }) { (_) in
         }
     }
@@ -192,14 +192,20 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.09851664624, green: 0.2761102814, blue: 0.5600723167, alpha: 1)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "ログアウト", style: .plain, target: self, action: #selector(handleLogout))
         
         view.backgroundColor = .white
         view.addSubview(statusBars)
         view.addSubview(cardDeckView)
         statusBars.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 10) )
         cardDeckView.anchor(top: statusBars.bottomAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 16, right: 16))
-        
-
+    }
+    
+    @objc fileprivate func handleLogout(){
+        try? Auth.auth().signOut()
+        let registrationControler = RegistrationController()
+        let navController = UINavigationController(rootViewController: registrationControler)
+        present(navController, animated: true)
     }
     
     fileprivate func setupCardView() {

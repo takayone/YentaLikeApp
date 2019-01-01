@@ -93,4 +93,13 @@ extension UIView {
         }
     }
     
+  
+    func setupGradientBackgroundcolor () {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1).cgColor, #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1).cgColor]
+        gradientLayer.locations = [0, 1]
+        layer.addSublayer(gradientLayer)
+        gradientLayer.frame = bounds
+    }
+    
 }

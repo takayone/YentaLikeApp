@@ -8,8 +8,7 @@
 
 import UIKit
 
-class SelfIntroCell: UITableViewCell {
-    
+class SelfIntroCell: UITableViewCell, UITextViewDelegate {
     
     let textView: UITextView = {
         let tv = UITextView()
@@ -18,12 +17,14 @@ class SelfIntroCell: UITableViewCell {
         return tv
     }()
     
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         addSubview(textView)
-        textView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 100))
+        textView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 200))
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

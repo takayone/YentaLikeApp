@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30103C2C21DB989F00BBA230 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30103C2B21DB989F00BBA230 /* RegistrationController.swift */; };
+		30103C2F21DBB79000BBA230 /* BirthdayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30103C2E21DBB79000BBA230 /* BirthdayCell.swift */; };
 		3064A31521D8E7C100BC5ADB /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3064A31421D8E7C100BC5ADB /* UserDetailsController.swift */; };
 		3064A31721D8F43700BC5ADB /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3064A31621D8F43700BC5ADB /* HeaderView.swift */; };
 		306689CC21D781DD00263580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689CB21D781DD00263580 /* AppDelegate.swift */; };
@@ -20,7 +22,7 @@
 		306689EA21D78C1900263580 /* BottomStackViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689E921D78C1900263580 /* BottomStackViews.swift */; };
 		306689EC21D793F600263580 /* SwipeResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689EB21D793F600263580 /* SwipeResultView.swift */; };
 		306689EF21D7980F00263580 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689EE21D7980F00263580 /* User.swift */; };
-		306689F421D799E900263580 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F321D799E900263580 /* RegistrationController.swift */; };
+		306689F421D799E900263580 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F321D799E900263580 /* SettingsController.swift */; };
 		306689F621D79BDD00263580 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F521D79BDD00263580 /* CustomTextField.swift */; };
 		306689F821D79F7D00263580 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F721D79F7D00263580 /* LoginController.swift */; };
 		306689FA21D7AA4700263580 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F921D7AA4700263580 /* CardView.swift */; };
@@ -33,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		30103C2B21DB989F00BBA230 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
+		30103C2E21DBB79000BBA230 /* BirthdayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayCell.swift; sourceTree = "<group>"; };
 		3064A31421D8E7C100BC5ADB /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
 		3064A31621D8F43700BC5ADB /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		306689C821D781DD00263580 /* YentaLikeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YentaLikeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,7 +52,7 @@
 		306689E921D78C1900263580 /* BottomStackViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomStackViews.swift; sourceTree = "<group>"; };
 		306689EB21D793F600263580 /* SwipeResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeResultView.swift; sourceTree = "<group>"; };
 		306689EE21D7980F00263580 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		306689F321D799E900263580 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
+		306689F321D799E900263580 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		306689F521D79BDD00263580 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		306689F721D79F7D00263580 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		306689F921D7AA4700263580 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -184,8 +188,9 @@
 		30C393CE21DB238C00015D6E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				306689F321D799E900263580 /* RegistrationController.swift */,
+				30103C2B21DB989F00BBA230 /* RegistrationController.swift */,
 				306689F721D79F7D00263580 /* LoginController.swift */,
+				306689F321D799E900263580 /* SettingsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -194,10 +199,11 @@
 			isa = PBXGroup;
 			children = (
 				30B714F121DB70A600EB55D7 /* CustomHeaderView.swift */,
-				306689F521D79BDD00263580 /* CustomTextField.swift */,
 				30C393D221DB263F00015D6E /* DefaultCell.swift */,
 				30B714E521DB299000EB55D7 /* DatePickerCell.swift */,
 				30B714EB21DB57AA00EB55D7 /* SelfIntroCell.swift */,
+				306689F521D79BDD00263580 /* CustomTextField.swift */,
+				30103C2E21DBB79000BBA230 /* BirthdayCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -366,12 +372,14 @@
 				306689E821D78B8200263580 /* Extensions + views.swift in Sources */,
 				306689EC21D793F600263580 /* SwipeResultView.swift in Sources */,
 				306689E021D7846E00263580 /* MainTabBarController.swift in Sources */,
+				30103C2F21DBB79000BBA230 /* BirthdayCell.swift in Sources */,
 				306689CC21D781DD00263580 /* AppDelegate.swift in Sources */,
 				306689E321D78A8300263580 /* SwipeController.swift in Sources */,
-				306689F421D799E900263580 /* RegistrationController.swift in Sources */,
+				306689F421D799E900263580 /* SettingsController.swift in Sources */,
 				3064A31521D8E7C100BC5ADB /* UserDetailsController.swift in Sources */,
 				306689EF21D7980F00263580 /* User.swift in Sources */,
 				306689F621D79BDD00263580 /* CustomTextField.swift in Sources */,
+				30103C2C21DB989F00BBA230 /* RegistrationController.swift in Sources */,
 				30B714F221DB70A600EB55D7 /* CustomHeaderView.swift in Sources */,
 				30C393D321DB263F00015D6E /* DefaultCell.swift in Sources */,
 				30B714E621DB299000EB55D7 /* DatePickerCell.swift in Sources */,

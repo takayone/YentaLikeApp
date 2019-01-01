@@ -2,12 +2,13 @@
 //  RegistrationController.swift
 //  YentaLikeApp
 //
-//  Created by takahitoyoneda on 2018/12/29.
-//  Copyright © 2018 takahitoyoneda. All rights reserved.
+//  Created by takahitoyoneda on 2019/01/01.
+//  Copyright © 2019 takahitoyoneda. All rights reserved.
 //
 
 import UIKit
 import Firebase
+import JGProgressHUD
 
 extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -15,31 +16,20 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
         selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         dismiss(animated: true)
     }
-
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true)
     }
 }
 
-class RegistrationController: UITableViewController, DatePickerCellDelegate {
-    
-    var user = User(fullName: "", imageUrl: "", age: 18, companyName: "", profession: "", startingDate: "", selfIntroduction: "", schoolName: "", schoolDepartment: "", uid: "", birthDate: "")
-    
-    lazy var headerView : UIView = {
-        let view = UIView()
-        view.addSubview(selectPhotoButton)
-        selectPhotoButton.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 16, right: 16), size: .init(width: 0, height: 0))
-        return view
-    }()
+class RegistrationController: UIViewController  {
     
     let selectPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .white
         button.setTitle("写真を選択", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .heavy)
         button.setTitleColor(.black, for: .normal)
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.layer.borderWidth = 1
         button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(handlePhoto), for: .touchUpInside)
         button.imageView?.contentMode = .scaleAspectFill
@@ -53,32 +43,172 @@ class RegistrationController: UITableViewController, DatePickerCellDelegate {
         present(imagePickerController, animated: true)
     }
     
-    let footerButton: UIButton = {
+
+    let nameTextField: CustomTextField = {
+        let tf = CustomTextField(padding: 24, height: 44)
+        tf.backgroundColor = .white
+        tf.placeholder = "名前を入れてください"
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
+        return tf
+    }()
+    
+    let emailTextField: CustomTextField = {
+        let tf = CustomTextField(padding: 24, height: 44)
+        tf.backgroundColor = .white
+        tf.placeholder = "メールアドレスを入れてください"
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
+        return tf
+    }()
+    
+    let passwordTextField: CustomTextField = {
+        let tf = CustomTextField(padding: 24, height: 44)
+        tf.backgroundColor = .white
+        tf.isSecureTextEntry = true
+        tf.placeholder = "パスワードを入れてください"
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
+        return tf
+    }()
+    
+    //３つが入力された時にregisterbuttonが押せるようにする。
+    @objc fileprivate func handleTextChange(textField: UITextField) {
+        
+        let isValidForm = selectPhotoButton.imageView != nil && nameTextField.text?.isEmpty == false && emailTextField.text?.isEmpty == false && passwordTextField.text?.isEmpty == false
+        
+        if isValidForm{
+            registerButton.isEnabled = true
+            registerButton.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+        }
+        
+    }
+    
+    let registerButton: UIButton = {
         let button = UIButton(type: .system)
+        button.backgroundColor = .white
         button.setTitle("登録する", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
+        button.layer.cornerRadius = 22
+        button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         button.backgroundColor = .lightGray
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
+        button.isEnabled = false
         button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return button
     }()
     
-    //1/1日次はここから。firebaseAuth.authで登録しつつ、storageに保管しつつ、全てのデータをデータベースに登録する
+    let goToLoginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("ログイン画面へ", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
+        button.addTarget(self, action: #selector(handleGoToLogin), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc fileprivate func handleGoToLogin(){
+        let loginController = LoginController()
+        navigationController?.pushViewController(loginController, animated: true)
+    }
+    
+    
+    let registeringHud = JGProgressHUD()
+    
     @objc fileprivate func handleRegister(){
-        print("toucing button tottoot")
+        self.handleTapDismiss()
         
-//        Auth.auth().createUser(withEmail: <#T##String#>, password: <#T##String#>, completion: <#T##AuthDataResultCallback?##AuthDataResultCallback?##(AuthDataResult?, Error?) -> Void#>)
+        createUserInFirebase()
+        
+    }
+    
+    fileprivate func createUserInFirebase(){
+        
+        guard let email = emailTextField.text else {return}
+        guard let password = passwordTextField.text else {return}
+        Auth.auth().createUser(withEmail: email, password: password) { (res, err) in
+            if let err = err{
+                print("failed to create user", err)
+                return
+            }
+            
+            print("successfully created user")
+            
+            self.savetoFirestroreStorage()
+        }
+    }
+    
+    fileprivate func savetoFirestroreStorage(){
+        let fileName = UUID().uuidString
+        
+        let ref = Storage.storage().reference(withPath: "images/").child(fileName)
+        
+        guard let uploadData = selectPhotoButton.imageView?.image?.jpegData(compressionQuality: 0.5) else {return}
+        
+        ref.putData(uploadData, metadata: nil) { (data, err) in
+            if let err = err{
+                print("failed to put data to storage", err)
+                return
+            }
+            
+            print("successfully put img data to storage")
+            
+            ref.downloadURL(completion: { (url, err) in
+                
+                if let err = err{
+                    print("failed to download url", err)
+                    return
+                }
+                guard let urlString = url?.absoluteString else {return}
+                print("successfully download url: \(urlString)")
+                
+                self.saveToFirestoreWithUrl(imageUrl: urlString)
+            })
+            
+        }
+    }
+    
+    fileprivate func saveToFirestoreWithUrl(imageUrl: String){
+        
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        guard let fullName = nameTextField.text else {return}
+        guard let email = nameTextField.text else {return}
+        
+        let docData: [String : Any] = ["fullName": fullName, "email": email, "uid": uid, "imageUrl": imageUrl]
+        
+        let ref = Firestore.firestore().collection("users").document(uid)
+        ref.setData(docData) { (err) in
+            if let err = err{
+                print("failed to save to Firestore",err)
+                return
+            }
+            
+            print("successfully save to firestore")
+            let settingController = SettingsController()
+            let navController = UINavigationController(rootViewController: settingController)
+            self.present(navController, animated: true)
+        }
+    }
+    
+    
+    
+    fileprivate func showHudWithError(err: Error){
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Fail"
+        hud.detailTextLabel.text = err.localizedDescription
+        hud.show(in: view)
+        hud.dismiss(afterDelay: 4.0)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "登録画面"
+        
+        view.setupGradientBackgroundcolor()
+        setupLayout()
+        
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
         setupNotificationObservers()
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
-   
     }
     
-    @objc fileprivate func handleTap(){
-        view.endEditing(true)
+    @objc fileprivate func handleTapDismiss(){
+        self.view.endEditing(true)
     }
     
     fileprivate func setupNotificationObservers(){
@@ -94,8 +224,7 @@ class RegistrationController: UITableViewController, DatePickerCellDelegate {
     @objc fileprivate func handleKeyboardWillShow(notification: Notification){
         guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         let keyboardFrame = value.cgRectValue
-        let bottomSpace: CGFloat = 250
-//        let bottomSpace = view.frame.height - tableView.tableFooterView!.frame.origin.y - tableView.tableFooterView!.frame.height
+        let bottomSpace = view.frame.height - overallStackViews.frame.origin.y - overallStackViews.frame.height
         let difference = keyboardFrame.height - bottomSpace
         self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
     }
@@ -104,147 +233,47 @@ class RegistrationController: UITableViewController, DatePickerCellDelegate {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.transform = .identity
         })
+        
     }
     
-    class HeaderLabel: UILabel{
-        override func drawText(in rect: CGRect) {
-            super.drawText(in: rect.insetBy(dx: 16, dy: 0))
-            font = UIFont.boldSystemFont(ofSize: 12)
+    lazy var verticalStackViews: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [
+            nameTextField,
+            emailTextField,
+            passwordTextField,
+            registerButton
+            ])
+        sv.axis = .vertical
+        sv.distribution = .fillEqually
+        sv.spacing = 8
+        return sv
+    }()
+    
+    
+    lazy var overallStackViews = UIStackView(arrangedSubviews: [
+        selectPhotoButton,
+        verticalStackViews
+        ])
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.verticalSizeClass == .compact {
+            overallStackViews.axis = .horizontal
+        } else {
+            overallStackViews.axis = .vertical
         }
     }
     
-
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    fileprivate func setupLayout() {
+        navigationController?.isNavigationBarHidden = true
+        view.addSubview(overallStackViews)
+        selectPhotoButton.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        overallStackViews.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50))
+        overallStackViews.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        overallStackViews.axis = .horizontal
+        overallStackViews.spacing = 8
         
-        if section == 0{
-          return headerView
-        }
-        let headerLabel = HeaderLabel()
-        headerLabel.backgroundColor = .lightGray
-        
-        switch section {
-        case 1:
-            headerLabel.text = "名前"
-        case 2:
-            headerLabel.text = "生年月日"
-        case 3:
-            headerLabel.text = "会社名"
-        case 4:
-            headerLabel.text = "現職入社時期"
-        case 5:
-            headerLabel.text = "職種名"
-        case 6:
-            headerLabel.text = "学校名"
-        case 7:
-            headerLabel.text = "学部"
-        default:
-            headerLabel.text = "自己紹介文"
-        }
-        return headerLabel
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? view.frame.width : 40
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 9
-    }
-    
- 
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let defaultCell = DefaultCell(style: .default, reuseIdentifier: "defaultCell")
-        let datePickerCell = DatePickerCell(style: .default, reuseIdentifier: "datePickerCell")
-        let selfIntroCell = SelfIntroCell(style: .default, reuseIdentifier: "selfIntroCell")
-        
-        
-        switch indexPath.section {
-        case 1:
-            defaultCell.textField.text = user.fullName
-            defaultCell.textField.addTarget(self, action: #selector(handleFullNameChanged), for: .editingChanged)
-        case 2:
-            datePickerCell.delegate = self
-            datePickerCell.textField.text = user.birthDate
-            return datePickerCell
-        case 3:
-            defaultCell.textField.placeholder = "会社名を入力してください"
-            defaultCell.textField.text = user.companyName
-            defaultCell.textField.addTarget(self, action: #selector(handleCompanyNameChanged), for: .editingChanged)
-        case 4:
-            datePickerCell.delegate = self
-            datePickerCell.textField.text = user.startingDate
-            return datePickerCell
-        case 5:
-            defaultCell.textField.placeholder = "職種名を入力してください"
-            defaultCell.textField.text = user.profession
-            defaultCell.textField.addTarget(self, action: #selector(hanldeProfessionChanged), for: .editingChanged)
-        case 6:
-            defaultCell.textField.placeholder = "学校名を入力してください"
-            defaultCell.textField.text = user.schoolName
-            defaultCell.textField.addTarget(self, action: #selector(handleSchoolNameChanged), for: .editingChanged)
-        case 7:
-            defaultCell.textField.placeholder = "学部名を入力してください"
-            defaultCell.textField.text = user.schoolDepartment
-            defaultCell.textField.addTarget(self, action: #selector(handleSchoolDepartmentChanged), for: .editingChanged)
-        default:
-            return selfIntroCell
-        }
-        
-        return defaultCell
-    }
-    
-
-    
-    @objc fileprivate func handleFullNameChanged(textField: UITextField){
-        user.fullName = textField.text ?? ""
-        
-    }
-    
-    @objc fileprivate func handleCompanyNameChanged(textField: UITextField){
-        user.companyName = textField.text ?? ""
-      
-    }
-    
-    @objc fileprivate func hanldeProfessionChanged(textField: UITextField){
-        user.profession = textField.text ?? ""
-       
-    }
-    
-    @objc fileprivate func handleSchoolNameChanged(textField: UITextField){
-        user.schoolName = textField.text ?? ""
-       
-    }
-    
-    @objc fileprivate func handleSchoolDepartmentChanged(textField: UITextField){
-        user.schoolDepartment = textField.text ?? ""
- 
-    }
-    
-    //上記と同じようにやろうとすると、初期入力時にnilとなってしまうからdelegateメソッドでtextFieldに入力してから、値を渡すこととした
-    func didSetDate(dateString: String) {
-        //aの時はこっち、bの時はこっちとしたいんだけども何がそれを分けられるのだろうか。
-        
-        user.startingDate = dateString
-        
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 0 : 1
-    }
-    
-    //Footer
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return footerButton
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == 8 {
-            return 50
-        }
-        
-        return 0
+        view.addSubview(goToLoginButton)
+        goToLoginButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 0))
     }
     
 }

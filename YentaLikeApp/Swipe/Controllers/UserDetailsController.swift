@@ -9,8 +9,8 @@
 import UIKit
 
 protocol UserDetailsControllerDelegate {
-    func didTapDislike()
-    func didTapLike()
+    func didTapDislike(user: User)
+    func didTapLike(user: User)
 }
 
 class UserDetailsController: UITableViewController {
@@ -49,13 +49,13 @@ class UserDetailsController: UITableViewController {
     
     @objc fileprivate func handleLike(){
 //        navigationController?.popViewController(animated: true)
-        self.delegate?.didTapLike()
+        self.delegate?.didTapLike(user: user!)
     }
     
     @objc fileprivate func handleDislike(){
         //一旦SwipeControllerに戻る
 //        navigationController?.popViewController(animated: true)
-        self.delegate?.didTapDislike()
+        self.delegate?.didTapDislike(user: user!)
     }
     
     override func viewDidLoad() {

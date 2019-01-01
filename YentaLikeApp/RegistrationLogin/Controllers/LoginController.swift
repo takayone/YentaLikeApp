@@ -52,7 +52,7 @@ class LoginController: UIViewController {
     
     let goBackButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Go To Login", for: .normal)
+        button.setTitle("登録画面へ", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
         button.addTarget(self, action: #selector(handleGoBack), for: .touchUpInside)
@@ -60,17 +60,18 @@ class LoginController: UIViewController {
     }()
     
     @objc fileprivate func handleGoBack(){
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.setupGradientBackgroundcolor()
         setupLayout()
     }
     
     fileprivate func setupLayout() {
-        view.backgroundColor = .blue
+        
         let overallStackViews = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, loginButton])
         navigationController?.isNavigationBarHidden = true
         view.addSubview(overallStackViews)

@@ -25,9 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-        let registrationController = RegistrationController()
-        let navContoller = UINavigationController(rootViewController: registrationController)
-        window?.rootViewController = navContoller
+//        let registrationController = RegistrationController()
+//        let navContoller = UINavigationController(rootViewController: registrationController)
+//        let swipeController = SwipeController()
+//        let navController = UINavigationController(rootViewController: swipeController)
+        let mainTabBarController = MainTabBarController()
+        window?.rootViewController = mainTabBarController
         return true
     }
 

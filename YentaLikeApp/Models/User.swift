@@ -19,7 +19,7 @@ class User {
     var schoolName: String
     var schoolDepartment: String
     var uid: String
-    var birthDate: String
+    var birthDate: Date
 
     
     init(dictionary: [String: Any]) {
@@ -33,10 +33,10 @@ class User {
         self.schoolName = dictionary["schoolName"] as? String ?? ""
         self.schoolDepartment = dictionary["schoolDepartment"] as? String ?? ""
         self.startingDate = dictionary["startingDate"] as? String ?? ""
-        self.birthDate = dictionary["birthDate"] as? String ?? ""
+        self.birthDate = dictionary["birthDate"] as? Date ?? Date()
     }
     
-    init(fullName: String, imageUrl: String, age: Int, companyName: String, profession: String, startingDate: String, selfIntroduction: String, schoolName: String, schoolDepartment: String, uid: String, birthDate: String) {
+    init(fullName: String, imageUrl: String, age: Int, companyName: String, profession: String, startingDate: String, selfIntroduction: String, schoolName: String, schoolDepartment: String, uid: String, birthDate: Date) {
         self.fullName = fullName
         self.imageUrl = imageUrl
         self.age = age
@@ -109,6 +109,14 @@ class User {
         attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
         
         return attributedText
+    }
+    
+    func changeBirthDateToString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.locale = Locale(identifier: "ja")
+        let dateString = dateFormatter.string(from: self.birthDate)
+        return dateString
     }
     
     
