@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3064A31521D8E7C100BC5ADB /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3064A31421D8E7C100BC5ADB /* UserDetailsController.swift */; };
+		3064A31721D8F43700BC5ADB /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3064A31621D8F43700BC5ADB /* HeaderView.swift */; };
 		306689CC21D781DD00263580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689CB21D781DD00263580 /* AppDelegate.swift */; };
 		306689D121D781DD00263580 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 306689CF21D781DD00263580 /* Main.storyboard */; };
 		306689D321D781DE00263580 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306689D221D781DE00263580 /* Assets.xcassets */; };
@@ -22,10 +24,17 @@
 		306689F621D79BDD00263580 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F521D79BDD00263580 /* CustomTextField.swift */; };
 		306689F821D79F7D00263580 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F721D79F7D00263580 /* LoginController.swift */; };
 		306689FA21D7AA4700263580 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F921D7AA4700263580 /* CardView.swift */; };
+		307AA58421D91BC50087A0C4 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307AA58321D91BC50087A0C4 /* Company.swift */; };
+		30B714E621DB299000EB55D7 /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B714E521DB299000EB55D7 /* DatePickerCell.swift */; };
+		30B714EC21DB57AA00EB55D7 /* SelfIntroCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B714EB21DB57AA00EB55D7 /* SelfIntroCell.swift */; };
+		30B714F221DB70A600EB55D7 /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B714F121DB70A600EB55D7 /* CustomHeaderView.swift */; };
+		30C393D321DB263F00015D6E /* DefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C393D221DB263F00015D6E /* DefaultCell.swift */; };
 		73A8B953758A193FC5FAA838 /* Pods_YentaLikeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E22BE76410D8361B68AE029 /* Pods_YentaLikeApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3064A31421D8E7C100BC5ADB /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
+		3064A31621D8F43700BC5ADB /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		306689C821D781DD00263580 /* YentaLikeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YentaLikeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		306689CB21D781DD00263580 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		306689D021D781DD00263580 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -43,6 +52,11 @@
 		306689F521D79BDD00263580 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		306689F721D79F7D00263580 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		306689F921D7AA4700263580 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		307AA58321D91BC50087A0C4 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
+		30B714E521DB299000EB55D7 /* DatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
+		30B714EB21DB57AA00EB55D7 /* SelfIntroCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfIntroCell.swift; sourceTree = "<group>"; };
+		30B714F121DB70A600EB55D7 /* CustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
+		30C393D221DB263F00015D6E /* DefaultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCell.swift; sourceTree = "<group>"; };
 		449D30EB4661E74998B2C4F7 /* Pods-YentaLikeApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YentaLikeApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YentaLikeApp/Pods-YentaLikeApp.debug.xcconfig"; sourceTree = "<group>"; };
 		8E22BE76410D8361B68AE029 /* Pods_YentaLikeApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YentaLikeApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D342C9A48DB0B27FFAD1D7 /* Pods-YentaLikeApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YentaLikeApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-YentaLikeApp/Pods-YentaLikeApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -60,6 +74,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3064A31821D8F4B000BC5ADB /* MainViews */ = {
+			isa = PBXGroup;
+			children = (
+				306689E921D78C1900263580 /* BottomStackViews.swift */,
+				306689EB21D793F600263580 /* SwipeResultView.swift */,
+				306689F921D7AA4700263580 /* CardView.swift */,
+			);
+			path = MainViews;
+			sourceTree = "<group>";
+		};
+		3064A31921D8F4C800BC5ADB /* UserDetailViews */ = {
+			isa = PBXGroup;
+			children = (
+				3064A31621D8F43700BC5ADB /* HeaderView.swift */,
+			);
+			path = UserDetailViews;
+			sourceTree = "<group>";
+		};
 		306689BF21D781DD00263580 = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				306689E221D78A8300263580 /* SwipeController.swift */,
+				3064A31421D8E7C100BC5ADB /* UserDetailsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -116,9 +149,8 @@
 		306689E521D78B3E00263580 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				306689E921D78C1900263580 /* BottomStackViews.swift */,
-				306689EB21D793F600263580 /* SwipeResultView.swift */,
-				306689F921D7AA4700263580 /* CardView.swift */,
+				3064A31821D8F4B000BC5ADB /* MainViews */,
+				3064A31921D8F4C800BC5ADB /* UserDetailViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -135,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				306689EE21D7980F00263580 /* User.swift */,
+				307AA58321D91BC50087A0C4 /* Company.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -142,11 +175,31 @@
 		306689F021D7996F00263580 /* RegistrationLogin */ = {
 			isa = PBXGroup;
 			children = (
-				306689F321D799E900263580 /* RegistrationController.swift */,
-				306689F521D79BDD00263580 /* CustomTextField.swift */,
-				306689F721D79F7D00263580 /* LoginController.swift */,
+				30C393CF21DB239E00015D6E /* Views */,
+				30C393CE21DB238C00015D6E /* Controllers */,
 			);
 			path = RegistrationLogin;
+			sourceTree = "<group>";
+		};
+		30C393CE21DB238C00015D6E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				306689F321D799E900263580 /* RegistrationController.swift */,
+				306689F721D79F7D00263580 /* LoginController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		30C393CF21DB239E00015D6E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				30B714F121DB70A600EB55D7 /* CustomHeaderView.swift */,
+				306689F521D79BDD00263580 /* CustomTextField.swift */,
+				30C393D221DB263F00015D6E /* DefaultCell.swift */,
+				30B714E521DB299000EB55D7 /* DatePickerCell.swift */,
+				30B714EB21DB57AA00EB55D7 /* SelfIntroCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		5C2A4469EF863590650566DF /* Pods */ = {
@@ -316,10 +369,17 @@
 				306689CC21D781DD00263580 /* AppDelegate.swift in Sources */,
 				306689E321D78A8300263580 /* SwipeController.swift in Sources */,
 				306689F421D799E900263580 /* RegistrationController.swift in Sources */,
+				3064A31521D8E7C100BC5ADB /* UserDetailsController.swift in Sources */,
 				306689EF21D7980F00263580 /* User.swift in Sources */,
 				306689F621D79BDD00263580 /* CustomTextField.swift in Sources */,
+				30B714F221DB70A600EB55D7 /* CustomHeaderView.swift in Sources */,
+				30C393D321DB263F00015D6E /* DefaultCell.swift in Sources */,
+				30B714E621DB299000EB55D7 /* DatePickerCell.swift in Sources */,
 				306689FA21D7AA4700263580 /* CardView.swift in Sources */,
+				307AA58421D91BC50087A0C4 /* Company.swift in Sources */,
 				306689F821D79F7D00263580 /* LoginController.swift in Sources */,
+				3064A31721D8F43700BC5ADB /* HeaderView.swift in Sources */,
+				30B714EC21DB57AA00EB55D7 /* SelfIntroCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
