@@ -33,13 +33,41 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
 
         setupStatusBars()
         setupLayout()
-//        setupCardView()
-        fetchUsersFromFireStore()
+        fetchSwipes()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
     }
+    
+    
+    //全ユーザーをfetchする。
+    var swipes = [String: Int]()
+    
+    fileprivate func fetchSwipes(){
+        guard let currentUserUid = Auth.auth().currentUser?.uid else {return}
+        //swipesのデータをとる
+        let ref = Firestore.firestore().collection("swipes").document(currentUserUid)
+        ref.getDocument { (snapshot, err) in
+            if let err = err{
+                print("failed to fetch current user swipe info",err)
+                return
+            }
+            
+            print("successfully get current user swipe info")
+            
+            //元々はguard letでdataを宣言していたが、初期に作る時にreturn
+            let data = snapshot?.data() as? [String: Int] ?? ["": 0]
+            //いかによりswipesに[いろんなuserのuid: 1,0]が入った。
+            self.swipes = data
+            
+            print(self.swipes)
+            //全てのユーザーの呼び出し
+            self.fetchUsersFromFireStore()
+        }
+    }
+    
+    
     
     fileprivate func fetchUsersFromFireStore(){
         
@@ -51,17 +79,30 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
             }
             
             guard let snapshots = allDocuments?.documents else {return}
-            
+            guard let currentUserUid = Auth.auth().currentUser?.uid else {return}
+
             //usersに全てのユーザーを入れる
             snapshots.forEach({ (snapshot) in
                 guard let dictionary = snapshot.data() as? [String : Any] else {return}
                 let user = User(dictionary: dictionary)
-                self.users.append(user)
+                let cardUID = user.uid
+                
+                //今ログインしているユーザーは出ないように弾くロジック
+                let notCurrentUserAddedToSwipe = user.uid != currentUserUid
+                //過去swipeしたユーザである時（swipes[String: Any]のvalue値に何か値がない場合には発動
+                let hasNotSwipedBefore = self.swipes[cardUID] == nil
+                
+                if notCurrentUserAddedToSwipe && hasNotSwipedBefore{
+                    self.users.append(user)
+                }
             })
             
             self.setupCardView()
         }
     }
+    
+
+    
     
     func didTappingCardView(user: User) {
         let userDetailsController = UserDetailsController()
@@ -93,8 +134,11 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
     }
     
     fileprivate func saveSwipesToFirestore(user: User, translationDirection: Int){
+        var didLike: Int = 0
         
-        print("hey")
+        if translationDirection == 1 {
+            didLike = 1
+        }
         //とりあえずちゃんとregistrationページを作ってから取り掛かる。そうしないとこのAuth.auth().currentUserがそもそもおらんことになる
 
         guard let uid = Auth.auth().currentUser?.uid else {return}
@@ -102,19 +146,54 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         guard let cardUID = user.uid as? String else {return}
         
         //Swipe相手のuid。オケだったら1を入れだめだったら-1とする(translationDirection)
-        let documentData = [cardUID: translationDirection]
+        let documentData = [cardUID: didLike]
         
-        //12/31 ここからやりたいことは・・・もしswipes.uidのgetDocument内でデータが存在する場合には、updateのFirestoreを使う
+        //ここからやりたいことは・・・もしswipes.uidのgetDocument内でデータが存在する場合には、updateのFirestoreを使う
         //しそして存在しない場合には以下のような方法で保存を行う。保存できるところまでは確認完了。ここからRegistration, Loginの方の実装に向かう
         
-        Firestore.firestore().collection("swipes").document(uid).setData(documentData) { (err) in
+        //今のユーザーのswipeのデータが存在する場合には、updateを呼び出し、しない場合にはsetDataを呼び出す
+        Firestore.firestore().collection("swipes").document(uid).getDocument { (snapshot, err) in
             if let err = err{
-                print("failed to save data",err)
+                print("failed to fetch current user swipes", err)
                 return
             }
-            print("save to firestore")
+            print("successfully fetch current user's swipes")
+            
+            if snapshot?.exists == true {
+                
+                Firestore.firestore().collection("swipes").document(uid).updateData(documentData, completion: { (err) in
+                    if let err = err{
+                        print("failed to update swipe data",err)
+                        return
+                    }
+                    
+                    print("successfully update swipe data")
+                    //matchした時の処理を書く
+                    
+                })
+                
+                
+            } else {
+                
+                Firestore.firestore().collection("swipes").document(uid).setData(documentData) { (err) in
+                    if let err = err{
+                        print("failed to save data",err)
+                        return
+                    }
+                    
+                    print("successfully save swipes to firestore")
+                    //matchした時の処理を書く
+                    
+                    
+                }
+                
+            }
             
         }
+        
+
+        
+        
     }
     
   

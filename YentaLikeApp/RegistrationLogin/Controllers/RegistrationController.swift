@@ -169,7 +169,7 @@ class RegistrationController: UIViewController  {
         
         guard let uid = Auth.auth().currentUser?.uid else {return}
         guard let fullName = nameTextField.text else {return}
-        guard let email = nameTextField.text else {return}
+        guard let email = emailTextField.text else {return}
         
         let docData: [String : Any] = ["fullName": fullName, "email": email, "uid": uid, "imageUrl": imageUrl]
         
