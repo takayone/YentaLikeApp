@@ -12,9 +12,13 @@ import SDWebImage
 protocol CardViewDelegate {
     func didFinishSwiping(translationDirection: Int, user: User)
     func didTappingCardView(user: User)
+    func changingGestureTranslationX(translationX: CGFloat)
+    func whenShouldNotDismiss()
 }
 
 class CardView: UIView {
+    
+    var nextCardView: CardView?
     
     var user: User!{
         didSet{
@@ -49,24 +53,21 @@ class CardView: UIView {
         return label
     }()
     
-    let likesLabel: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .gray
-        label.text = "⭐️56人が「会って良かった」と言っています。"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        return label
+    let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
+        return view
     }()
     
     //labelを左上にするには？？
-    
     let selfIntroLabel: UILabel = {
         let label = UILabel()
         label.text = "こんにちは今日もお元気でしょうか？？？\n\n別に元気がない感じならば元気を出して行きましょうまじで。\n\nホームページはいかになります。\nよろしくお願いします。\nhttps://www.google.com/"
         label.numberOfLines = 0
         return label
     }()
+    
+
     
     
     override init(frame: CGRect) {
@@ -86,20 +87,23 @@ class CardView: UIView {
         layoutSubviews()
         addSubview(imageView)
         addSubview(infoLabel)
-        addSubview(likesLabel)
+        addSubview(separatorView)
         addSubview(selfIntroLabel)
         
         imageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 16, left: 16, bottom: 0, right: 0), size: .init(width: 80, height: 80))
         
         infoLabel.anchor(top: topAnchor, leading: imageView.trailingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 0), size: .init(width: 0, height: 80))
         
-        likesLabel.anchor(top: infoLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 32, left: 0, bottom: 0, right: 16), size: .init(width: 0, height: 50))
+        separatorView.anchor(top: infoLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 16, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 1))
+    
+        selfIntroLabel.anchor(top: separatorView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 8))
         
-        selfIntroLabel.anchor(top: likesLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 8))
     }
     
+    //swipeしたあとその後でusersDetailを開くと、前のユーザーのままになる。もう一度押すと治る
     @objc fileprivate func handleTap(gesture: UITapGestureRecognizer){
         delegate?.didTappingCardView(user: user)
+        print(user.fullName)
     }
     
     @objc fileprivate func handlePan(gesture: UIPanGestureRecognizer){
@@ -119,11 +123,13 @@ class CardView: UIView {
     }
     
     fileprivate func handleChange(gesture: UIPanGestureRecognizer){
+        //cardView本体
         let translation = gesture.translation(in: nil)
         let degrees: CGFloat = translation.x / 20
         let angle = degrees * .pi / 180
         let rotationTransform = CGAffineTransform(rotationAngle: angle)
         self.transform = rotationTransform.translatedBy(x: translation.x, y: translation.y)
+        self.delegate?.changingGestureTranslationX(translationX: translation.x)
     }
     
     fileprivate func handleEnded(gesture: UIPanGestureRecognizer) {
@@ -136,37 +142,16 @@ class CardView: UIView {
             //どっちのtranslationDirectionにするかをインプットとして入れる（likeの場合は1(右へ）, disLikeの場合は-1(左へ）
             self.delegate?.didFinishSwiping(translationDirection: translationDirection, user: user)
             
-            
-            
         } else {
             UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
                 self.transform = .identity
+                //SwipeControllerのlikeViewを.identityにしたいいい
+                self.delegate?.whenShouldNotDismiss()
             })
             
         }
     }
     
-//    func performSwipeAnimation (translation: CGFloat, angle: CGFloat) {
-//        let duration = 0.5
-//        let translationAnimation = CABasicAnimation(keyPath: "position.x")
-//        translationAnimation.toValue = translation
-//        translationAnimation.duration = duration
-//        translationAnimation.fillMode = .forwards
-//        translationAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
-//        translationAnimation.isRemovedOnCompletion = false
-//
-//        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-//        rotationAnimation.toValue = angle * CGFloat.pi / 180
-//        rotationAnimation.duration = duration
-//
-//        CATransaction.setCompletionBlock {
-//            self.removeFromSuperview()
-//        }
-//        self.layer.add(translationAnimation, forKey: "translation")
-//        self.layer.add(rotationAnimation, forKey: "rotation")
-//
-//        CATransaction.commit()
-//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -10,7 +10,6 @@ import UIKit
 import Firebase
 
 class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerDelegate {
-
     
     var users = [User]()
 
@@ -24,6 +23,23 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
     let cardDeckView: UIView = {
         let view = SwipeResultView()
         view.backgroundColor = .white
+        return view
+    }()
+    
+    let likeView: CustomLikeDislikeView = {
+        let view = CustomLikeDislikeView()
+        view.backgroundColor = #colorLiteral(red: 0.4470588235, green: 0.6941176471, blue: 0.5176470588, alpha: 1)
+        view.layer.cornerRadius = 4
+        return view
+    }()
+    
+    let disLikeView: CustomLikeDislikeView = {
+        let view = CustomLikeDislikeView()
+        view.backgroundColor = #colorLiteral(red: 0.9193864465, green: 0.296697557, blue: 0.2393967509, alpha: 1)
+        view.layer.cornerRadius = 4
+        let attrbutedText = NSMutableAttributedString(string: "×", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 30, weight: .bold)])
+        attrbutedText.append(NSAttributedString(string: "\n興味なし", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20, weight: .regular)]))
+        view.textLabel.attributedText = attrbutedText
         return view
     }()
 
@@ -90,7 +106,8 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
                 //今ログインしているユーザーは出ないように弾くロジック
                 let notCurrentUserAddedToSwipe = user.uid != currentUserUid
                 //過去swipeしたユーザである時（swipes[String: Any]のvalue値に何か値がない場合には発動
-                let hasNotSwipedBefore = self.swipes[cardUID] == nil
+//                let hasNotSwipedBefore = self.swipes[cardUID] == nil
+                let hasNotSwipedBefore = true
                 
                 if notCurrentUserAddedToSwipe && hasNotSwipedBefore{
                     self.users.append(user)
@@ -101,13 +118,30 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         }
     }
     
+    fileprivate func setupCardView() {
+        var index: Int = 0
+        //最大10まで、最低users.countまで
+        let cardFetchingNumbers = min(users.count ,10)
+        
+        (0..<cardFetchingNumbers).forEach { (_) in
+            let cardView = CardView()
+            cardView.delegate = self
+            cardView.user = self.users[index]
+            //ここにuidはある
+            cardDeckView.addSubview(cardView)
+            cardDeckView.sendSubviewToBack(cardView)
+            cardView.fillSuperview()
+            index = min(index + 1, 10)
+        }
+    }
 
     
+
     
+    //つまりここのユーザーが更新されていないことによって、前のユーザーが出てきてしまっている
     func didTappingCardView(user: User) {
         let userDetailsController = UserDetailsController()
-        //いまい見ているユーザーを渡したい
-        //User => User(uid:///)
+        
         //CardViewのprotocolで回せばおけ
         userDetailsController.user = user
         userDetailsController.delegate = self
@@ -124,7 +158,10 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
   
     func didFinishSwiping(translationDirection: Int, user: User) {
         
-        statusBars.subviews[indexNumber].backgroundColor = .blue
+        //likeViewをいなくならせる
+        likeView.transform = .identity
+        disLikeView.transform = .identity
+        statusBars.subviews[indexNumber].backgroundColor = #colorLiteral(red: 0.2352941176, green: 0.3803921569, blue: 0.6117647059, alpha: 1)
         performSwipeAnimation(translation: CGFloat(700 * translationDirection), angle: CGFloat(15 * translationDirection)) {
             self.indexNumber = min(self.indexNumber+1, 9)
             
@@ -202,6 +239,7 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         
         self.navigationController?.popViewController(animated: true)
         
+      
         UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
             self.didFinishSwiping(translationDirection: 1, user: user)
         }) { (_) in
@@ -222,7 +260,7 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
     
     
     func performSwipeAnimation (translation: CGFloat, angle: CGFloat, completion:@escaping ()->()) {
-        let duration = 1.2
+        let duration = 0.6
         let translationAnimation = CABasicAnimation(keyPath: "position.x")
         translationAnimation.toValue = translation
         translationAnimation.duration = duration
@@ -247,8 +285,24 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         cardView?.layer.add(rotationAnimation, forKey: "rotation")
         
         CATransaction.commit()
-        
     }
+    
+    //みぎやひだりからスライドインしてくるlikeViewの移動
+    func changingGestureTranslationX(translationX: CGFloat) {
+        
+        let likeTranslationRange: CGFloat = min(translationX, CGFloat(likeView.frame.width))
+        likeView.transform = CGAffineTransform(translationX: -likeTranslationRange, y: 0)
+        
+        let disLikeTranslationRange: CGFloat = min(-translationX, CGFloat(disLikeView.frame.width))
+        disLikeView.transform = CGAffineTransform(translationX: disLikeTranslationRange, y: 0)
+    }
+    
+    //dismissの必要がないときにlikeViewをもとのいちに戻す
+    func whenShouldNotDismiss() {
+        likeView.transform = .identity
+        disLikeView.transform = .identity
+    }
+    
 
     
    
@@ -258,7 +312,7 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         (0..<10).forEach { (_) in
             let view = UIView()
             view.layer.borderWidth = 1
-            view.layer.borderColor = UIColor.lightGray.cgColor
+            view.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
             statusBars.addArrangedSubview(view)
         }
         
@@ -278,6 +332,17 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         view.addSubview(cardDeckView)
         statusBars.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 10) )
         cardDeckView.anchor(top: statusBars.bottomAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 16, right: 16))
+        
+        
+        view.addSubview(likeView)
+        //興味あるのView。最初は見えないところからスタートさせる。gestureの値を受け取るには？
+        let width: CGFloat = 80
+        likeView.anchor(top: nil, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: -width), size: .init(width: width, height: width))
+        likeView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        view.addSubview(disLikeView)
+        disLikeView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: -width, bottom: 0, right: 0), size: .init(width: width, height: width))
+        disLikeView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     @objc fileprivate func handleLogout(){
@@ -287,23 +352,6 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         present(navController, animated: true)
     }
     
-    fileprivate func setupCardView() {
-        var index: Int = 0
-        //最大10まで、最低users.countまで
-        let cardFetchingNumbers = min(users.count ,10)
-        
-        (0..<cardFetchingNumbers).forEach { (_) in
-            let cardView = CardView()
-            cardView.delegate = self
-            cardView.user = self.users[index]
-            //ここにuidはある
-            cardDeckView.addSubview(cardView)
-            cardDeckView.sendSubviewToBack(cardView)
-            cardView.fillSuperview()
-            index = min(index + 1, 10)
-        }
-    }
-    //swipes.currentuserid.
-    
+
     
 }

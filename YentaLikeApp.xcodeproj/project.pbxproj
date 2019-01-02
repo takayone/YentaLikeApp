@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		30103C2C21DB989F00BBA230 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30103C2B21DB989F00BBA230 /* RegistrationController.swift */; };
 		30103C2F21DBB79000BBA230 /* BirthdayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30103C2E21DBB79000BBA230 /* BirthdayCell.swift */; };
+		30103C3121DCA83200BBA230 /* CustomLikeDislikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30103C3021DCA83200BBA230 /* CustomLikeDislikeView.swift */; };
 		3064A31521D8E7C100BC5ADB /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3064A31421D8E7C100BC5ADB /* UserDetailsController.swift */; };
 		3064A31721D8F43700BC5ADB /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3064A31621D8F43700BC5ADB /* HeaderView.swift */; };
 		306689CC21D781DD00263580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689CB21D781DD00263580 /* AppDelegate.swift */; };
@@ -37,6 +38,7 @@
 /* Begin PBXFileReference section */
 		30103C2B21DB989F00BBA230 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		30103C2E21DBB79000BBA230 /* BirthdayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayCell.swift; sourceTree = "<group>"; };
+		30103C3021DCA83200BBA230 /* CustomLikeDislikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLikeDislikeView.swift; sourceTree = "<group>"; };
 		3064A31421D8E7C100BC5ADB /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
 		3064A31621D8F43700BC5ADB /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		306689C821D781DD00263580 /* YentaLikeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YentaLikeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +86,7 @@
 				306689E921D78C1900263580 /* BottomStackViews.swift */,
 				306689EB21D793F600263580 /* SwipeResultView.swift */,
 				306689F921D7AA4700263580 /* CardView.swift */,
+				30103C3021DCA83200BBA230 /* CustomLikeDislikeView.swift */,
 			);
 			path = MainViews;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				30C393D321DB263F00015D6E /* DefaultCell.swift in Sources */,
 				30B714E621DB299000EB55D7 /* DatePickerCell.swift in Sources */,
 				306689FA21D7AA4700263580 /* CardView.swift in Sources */,
+				30103C3121DCA83200BBA230 /* CustomLikeDislikeView.swift in Sources */,
 				307AA58421D91BC50087A0C4 /* Company.swift in Sources */,
 				306689F821D79F7D00263580 /* LoginController.swift in Sources */,
 				3064A31721D8F43700BC5ADB /* HeaderView.swift in Sources */,
