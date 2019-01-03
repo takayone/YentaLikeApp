@@ -229,7 +229,7 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
                     
                     print("successfully update swipe data")
                     //matchした時の処理を書く
-                    
+                    self.checkUserIfMatchExists(cardUID: cardUID)
                 })
                 
                 
@@ -243,19 +243,81 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
                     
                     print("successfully save swipes to firestore")
                     //matchした時の処理を書く
-                    
+                    self.checkUserIfMatchExists(cardUID: cardUID)
                     
                 }
                 
             }
             
         }
-        
-
-        
-        
     }
     
+    fileprivate func checkUserIfMatchExists(cardUID: String){
+        
+        Firestore.firestore().collection("swipes").document(cardUID).getDocument { (snapshot, err) in
+            if let err = err{
+                print("failed to fetch document for cardUser",err)
+                return
+            }
+            
+            guard let data = snapshot?.data() else {return}
+            
+            guard let uid = Auth.auth().currentUser?.uid else {return}
+            
+            let hasMatched = data[uid] as? Int == 1
+            
+            if hasMatched {
+                print("has matched!!")
+//                self.presentMatchView(cardUID: cardUID)
+                //matchingした時にどうするのか？
+                //このマッチングしたという情報をどこかに保存したいところ。。
+                //messages.uid.cardUid というものを用意して　今のユーザー⇨マッチしたユーザーのUID
+                //そしてmessages側でfetch messages currentUserid
+                self.saveMatchingInfoToFirestore(cardUID: cardUID)
+            }
+        }
+    }
+    
+    fileprivate func saveMatchingInfoToFirestore(cardUID: String) {
+        guard let currentUserUid = Auth.auth().currentUser?.uid else {return}
+        
+        let docData = [cardUID: 1]
+        let ref = Firestore.firestore().collection("matches").document(currentUserUid)
+        
+        ref.getDocument { (snapshot, err) in
+            if let err = err{
+                print("failed to fetch matches",err)
+                return
+            }
+            
+            if snapshot?.exists == true{
+                
+                ref.updateData(docData, completion: { (err) in
+                    if let err = err{
+                        print("failed to update matching data", err)
+                        return
+                    }
+                    
+                    print("successfully update matching data")
+                    
+                })
+                
+            } else {
+                ref.setData(docData) { (err) in
+                    if let err = err{
+                        print("failed to save matching data to firestore",err)
+                        return
+                    }
+                    
+                    print("successfully save matching data to firestore")
+                }
+                
+            }
+            
+        }
+        
+ 
+    }
   
     //usersDetailsControllerでlikeもしくはdislikeをした時の挙動
     func didTapLike(user: User) {

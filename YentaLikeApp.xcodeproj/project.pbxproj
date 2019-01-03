@@ -12,6 +12,9 @@
 		30103C3121DCA83200BBA230 /* CustomLikeDislikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30103C3021DCA83200BBA230 /* CustomLikeDislikeView.swift */; };
 		301213E321DDB8A00084453D /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301213E221DDB8A00084453D /* ResultView.swift */; };
 		301213E721DDD8B40084453D /* ReportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301213E621DDD8B40084453D /* ReportController.swift */; };
+		3012140F21DE34720084453D /* MatchingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3012140E21DE34720084453D /* MatchingController.swift */; };
+		3012141521DE4C0B0084453D /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3012141421DE4C0B0084453D /* MessageCell.swift */; };
+		3012141721DE60340084453D /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3012141621DE60340084453D /* MessagesController.swift */; };
 		3064A31521D8E7C100BC5ADB /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3064A31421D8E7C100BC5ADB /* UserDetailsController.swift */; };
 		3064A31721D8F43700BC5ADB /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3064A31621D8F43700BC5ADB /* HeaderView.swift */; };
 		306689CC21D781DD00263580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689CB21D781DD00263580 /* AppDelegate.swift */; };
@@ -43,6 +46,9 @@
 		30103C3021DCA83200BBA230 /* CustomLikeDislikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLikeDislikeView.swift; sourceTree = "<group>"; };
 		301213E221DDB8A00084453D /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		301213E621DDD8B40084453D /* ReportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportController.swift; sourceTree = "<group>"; };
+		3012140E21DE34720084453D /* MatchingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingController.swift; sourceTree = "<group>"; };
+		3012141421DE4C0B0084453D /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		3012141621DE60340084453D /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
 		3064A31421D8E7C100BC5ADB /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
 		3064A31621D8F43700BC5ADB /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		306689C821D781DD00263580 /* YentaLikeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YentaLikeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +93,8 @@
 		301213E421DDD8440084453D /* Matching */ = {
 			isa = PBXGroup;
 			children = (
+				3012141021DE38730084453D /* Views */,
+				3012141121DE387B0084453D /* Controllers */,
 			);
 			path = Matching;
 			sourceTree = "<group>";
@@ -97,6 +105,23 @@
 				301213E621DDD8B40084453D /* ReportController.swift */,
 			);
 			path = Report;
+			sourceTree = "<group>";
+		};
+		3012141021DE38730084453D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3012141421DE4C0B0084453D /* MessageCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3012141121DE387B0084453D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3012140E21DE34720084453D /* MatchingController.swift */,
+				3012141621DE60340084453D /* MessagesController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		3064A31821D8F4B000BC5ADB /* MainViews */ = {
@@ -396,6 +421,7 @@
 				306689EA21D78C1900263580 /* BottomStackViews.swift in Sources */,
 				306689E821D78B8200263580 /* Extensions + views.swift in Sources */,
 				306689EC21D793F600263580 /* SwipeResultView.swift in Sources */,
+				3012141721DE60340084453D /* MessagesController.swift in Sources */,
 				306689E021D7846E00263580 /* MainTabBarController.swift in Sources */,
 				30103C2F21DBB79000BBA230 /* BirthdayCell.swift in Sources */,
 				306689CC21D781DD00263580 /* AppDelegate.swift in Sources */,
@@ -404,6 +430,7 @@
 				3064A31521D8E7C100BC5ADB /* UserDetailsController.swift in Sources */,
 				306689EF21D7980F00263580 /* User.swift in Sources */,
 				301213E721DDD8B40084453D /* ReportController.swift in Sources */,
+				3012141521DE4C0B0084453D /* MessageCell.swift in Sources */,
 				306689F621D79BDD00263580 /* CustomTextField.swift in Sources */,
 				30103C2C21DB989F00BBA230 /* RegistrationController.swift in Sources */,
 				30B714F221DB70A600EB55D7 /* CustomHeaderView.swift in Sources */,
@@ -411,6 +438,7 @@
 				30C393D321DB263F00015D6E /* DefaultCell.swift in Sources */,
 				30B714E621DB299000EB55D7 /* DatePickerCell.swift in Sources */,
 				306689FA21D7AA4700263580 /* CardView.swift in Sources */,
+				3012140F21DE34720084453D /* MatchingController.swift in Sources */,
 				30103C3121DCA83200BBA230 /* CustomLikeDislikeView.swift in Sources */,
 				307AA58421D91BC50087A0C4 /* Company.swift in Sources */,
 				306689F821D79F7D00263580 /* LoginController.swift in Sources */,
