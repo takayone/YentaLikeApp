@@ -42,6 +42,11 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         view.textLabel.attributedText = attrbutedText
         return view
     }()
+    
+    let resultView: ResultView = {
+        let view = ResultView()
+        return view
+    }()
 
     
     override func viewDidLoad() {
@@ -77,7 +82,6 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
             //いかによりswipesに[いろんなuserのuid: 1,0]が入った。
             self.swipes = data
             
-            print(self.swipes)
             //全てのユーザーの呼び出し
             self.fetchUsersFromFireStore()
         }
@@ -106,8 +110,8 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
                 //今ログインしているユーザーは出ないように弾くロジック
                 let notCurrentUserAddedToSwipe = user.uid != currentUserUid
                 //過去swipeしたユーザである時（swipes[String: Any]のvalue値に何か値がない場合には発動
-//                let hasNotSwipedBefore = self.swipes[cardUID] == nil
-                let hasNotSwipedBefore = true
+                let hasNotSwipedBefore = self.swipes[cardUID] == nil
+//                let hasNotSwipedBefore = true
                 
                 if notCurrentUserAddedToSwipe && hasNotSwipedBefore{
                     self.users.append(user)
@@ -133,6 +137,11 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
             cardView.fillSuperview()
             index = min(index + 1, 10)
         }
+        
+        //結果のresultViewを一番後ろに配置
+        cardDeckView.addSubview(resultView)
+        cardDeckView.sendSubviewToBack(resultView)
+        resultView.fillSuperview()
     }
 
     
@@ -155,6 +164,8 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
     //swipeを一回ごとにいろstatusBar.subviewsの色を変えていく
     //statusbar.subviews[index]的な感じで行ける？
     var indexNumber: Int = 0
+    var likeNumber: Int = 0
+    var disLikeNumber: Int = 0
   
     func didFinishSwiping(translationDirection: Int, user: User) {
         
@@ -162,9 +173,21 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         likeView.transform = .identity
         disLikeView.transform = .identity
         statusBars.subviews[indexNumber].backgroundColor = #colorLiteral(red: 0.2352941176, green: 0.3803921569, blue: 0.6117647059, alpha: 1)
+        
+        //resultViewに表示させるようのlikeNumber/disLikeNumberを渡す
+        if translationDirection == 1 {
+            likeNumber = likeNumber + 1
+            resultView.likeNumber = likeNumber
+        } else {
+            disLikeNumber = disLikeNumber + 1
+            resultView.disLikeNumber = disLikeNumber
+        }
+        //resultViewのlikeDislikeの合計を表示させる
+        let totalNumbers = likeNumber + disLikeNumber
+        resultView.totalNumbers = totalNumbers
+        
         performSwipeAnimation(translation: CGFloat(700 * translationDirection), angle: CGFloat(15 * translationDirection)) {
             self.indexNumber = min(self.indexNumber+1, 9)
-            
             //likeにswipeされた場合にswipesで保存
             self.saveSwipesToFirestore(user: user, translationDirection: translationDirection)
         }
@@ -326,6 +349,8 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.09851664624, green: 0.2761102814, blue: 0.5600723167, alpha: 1)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "ログアウト", style: .plain, target: self, action: #selector(handleLogout))
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)], for: .normal)
+        
         
         view.backgroundColor = .white
         view.addSubview(statusBars)

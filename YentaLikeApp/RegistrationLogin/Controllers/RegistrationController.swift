@@ -135,6 +135,8 @@ class RegistrationController: UIViewController  {
         }
     }
     
+  
+ 
     fileprivate func savetoFirestroreStorage(){
         let fileName = UUID().uuidString
         
@@ -165,11 +167,17 @@ class RegistrationController: UIViewController  {
         }
     }
     
+    //settingControllerに送る用
+    var user = User(fullName: "", imageUrl: "", age: 18, companyName: "", profession: "", startingDate: "", selfIntroduction: "", schoolName: "", schoolDepartment: "", uid: "", birthDate: Date())
+    
     fileprivate func saveToFirestoreWithUrl(imageUrl: String){
         
         guard let uid = Auth.auth().currentUser?.uid else {return}
         guard let fullName = nameTextField.text else {return}
         guard let email = emailTextField.text else {return}
+        
+        user.fullName = fullName
+        user.imageUrl = imageUrl
         
         let docData: [String : Any] = ["fullName": fullName, "email": email, "uid": uid, "imageUrl": imageUrl]
         
@@ -182,6 +190,7 @@ class RegistrationController: UIViewController  {
             
             print("successfully save to firestore")
             let settingController = SettingsController()
+            settingController.user = self.user
             let navController = UINavigationController(rootViewController: settingController)
             self.present(navController, animated: true)
         }
@@ -211,31 +220,36 @@ class RegistrationController: UIViewController  {
         self.view.endEditing(true)
     }
     
-    fileprivate func setupNotificationObservers(){
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+    fileprivate func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
+        //        NotificationCenter.default.removeObserver(self) // you'll have a retain cycle
     }
     
-    @objc fileprivate func handleKeyboardWillShow(notification: Notification){
-        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+    @objc fileprivate func handleKeyboardHide() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.transform = .identity
+        })
+    }
+    
+    @objc fileprivate func handleKeyboardShow(notification: Notification) {
+      
+        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardFrame = value.cgRectValue
+        print(keyboardFrame)
+     
         let bottomSpace = view.frame.height - overallStackViews.frame.origin.y - overallStackViews.frame.height
+        print(bottomSpace)
+        
         let difference = keyboardFrame.height - bottomSpace
         self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
     }
     
-    @objc fileprivate func handleKeyboardHide(){
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.transform = .identity
-        })
-        
-    }
-    
+
     lazy var verticalStackViews: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [
             nameTextField,

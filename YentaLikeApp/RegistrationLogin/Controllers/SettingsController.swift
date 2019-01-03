@@ -15,42 +15,39 @@ class SettingsController: UITableViewController, DatePickerCellDelegate, Birthda
     
     var user = User(fullName: "", imageUrl: "", age: 18, companyName: "", profession: "", startingDate: "", selfIntroduction: "", schoolName: "", schoolDepartment: "", uid: "", birthDate: Date())
     
-    let headerView : CustomHeaderView = {
+    
+    lazy var headerView : CustomHeaderView = {
         let view = CustomHeaderView()
         return view
     }()
     
-    let footerButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("登録する", for: .normal)
-        button.backgroundColor = .lightGray
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
-        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
-        return button
-    }()
-    
-    //1/1日次はここから。firebaseAuth.authで登録しつつ、storageに保管しつつ、全てのデータをデータベースに登録する
-    @objc fileprivate func handleRegister(){
-        print("toucing button tottoot")
-        
-//        Auth.auth().createUser(withEmail: <#T##String#>, password: <#T##String#>, completion: <#T##AuthDataResultCallback?##AuthDataResultCallback?##(AuthDataResult?, Error?) -> Void#>)
-    }
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
-//        navigationItem.title = "Settings"
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-//        navigationItem.rightBarButtonItems = [
-//            UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout)),
-//            UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
-//        ]
+        fetchCurrentUserFromFirebase()
         setupNavigationItems()
-        
         setupNotificationObservers()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
    
+    }
+    
+    fileprivate func fetchCurrentUserFromFirebase(){
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
+            guard let dictionary = snapshot?.data() else {return}
+            self.user = User(dictionary: dictionary)
+            
+            self.tableView.reloadData()
+            self.headerView.nameLabel.text = self.user.fullName ?? ""
+            
+            if let urlString = self.user.imageUrl as? String, let url = URL(string: urlString){
+                self.headerView.profileImageView.sd_setImage(with: url)
+            }
+            
+        }
     }
     
     fileprivate func setupNavigationItems(){
@@ -66,6 +63,14 @@ class SettingsController: UITableViewController, DatePickerCellDelegate, Birthda
     @objc fileprivate func handleSave(){
         guard let uid = Auth.auth().currentUser?.uid else {return}
         let selfIntroduction = selfIntroCell.textView.text ?? ""
+        
+        let now = Date()
+        let birthday: Date = user.birthDate
+        let calendar = Calendar.current
+        
+        let ageComponents = calendar.dateComponents([.year], from: birthday, to: now)
+        let age = ageComponents.year ?? 18
+        
         let dictionary: [String: Any] = [
             "companyName": user.companyName,
             "profession": user.profession,
@@ -73,7 +78,8 @@ class SettingsController: UITableViewController, DatePickerCellDelegate, Birthda
             "schoolName": user.schoolName,
             "schoolDepartment": user.schoolDepartment,
             "birthDate": user.birthDate,
-            "selfIntroduction": selfIntroduction
+            "selfIntroduction": selfIntroduction,
+            "age": age
         ]
         
         let ref = Firestore.firestore().collection("users").document(uid)
@@ -84,9 +90,11 @@ class SettingsController: UITableViewController, DatePickerCellDelegate, Birthda
             }
             
             print("success!!!!")
-            let swipeController = SwipeController()
-            let navController = UINavigationController(rootViewController: swipeController)
-            self.present(navController, animated: true)
+            let mainTabBarController = MainTabBarController()
+//            let swipeController = SwipeController()
+//            let navController = UINavigationController(rootViewController: swipeController)
+//            self.navigationController?.pushViewController(mainTabBarController, animated: true)
+            self.present(mainTabBarController, animated: true)
         }
     }
     
@@ -177,7 +185,7 @@ class SettingsController: UITableViewController, DatePickerCellDelegate, Birthda
         switch indexPath.section {
         case 1:
             birthdayCell.delegate = self
-            birthdayCell.textField.text = user.changeBirthDateToString()
+            birthdayCell.textField.text = user.changeBirthDateToString(date: user.birthDate)
             return birthdayCell
         case 2:
             defaultCell.textField.placeholder = "会社名を入力してください"

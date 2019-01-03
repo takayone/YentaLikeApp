@@ -20,7 +20,7 @@ class CustomHeaderView: UIView {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Takahito Yoneda"
+        label.text = "No Name"
         label.font = UIFont.systemFont(ofSize: 24, weight: .heavy)
         label.numberOfLines = 0
         return label

@@ -20,7 +20,6 @@ class User {
     var schoolDepartment: String
     var uid: String
     var birthDate: Date
-
     
     init(dictionary: [String: Any]) {
         self.fullName = dictionary["fullName"] as? String ?? ""
@@ -111,7 +110,7 @@ class User {
         return attributedText
     }
     
-    func changeBirthDateToString() -> String {
+    func changeBirthDateToString(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         dateFormatter.locale = Locale(identifier: "ja")
