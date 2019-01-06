@@ -114,18 +114,19 @@ class RegistrationController: UIViewController  {
     
     @objc fileprivate func handleRegister(){
         self.handleTapDismiss()
-        
         createUserInFirebase()
-        
     }
     
     fileprivate func createUserInFirebase(){
-        
+        registeringHud.show(in: view)
+        registeringHud.textLabel.text = "ユーザー登録中・・・"
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
         Auth.auth().createUser(withEmail: email, password: password) { (res, err) in
             if let err = err{
                 print("failed to create user", err)
+                self.registeringHud.dismiss()
+                self.showHudWithError(err: err)
                 return
             }
             
@@ -147,6 +148,8 @@ class RegistrationController: UIViewController  {
         ref.putData(uploadData, metadata: nil) { (data, err) in
             if let err = err{
                 print("failed to put data to storage", err)
+                self.registeringHud.dismiss()
+                self.showHudWithError(err: err)
                 return
             }
             
@@ -156,6 +159,8 @@ class RegistrationController: UIViewController  {
                 
                 if let err = err{
                     print("failed to download url", err)
+                    self.registeringHud.dismiss()
+                    self.showHudWithError(err: err)
                     return
                 }
                 guard let urlString = url?.absoluteString else {return}
@@ -185,6 +190,8 @@ class RegistrationController: UIViewController  {
         ref.setData(docData) { (err) in
             if let err = err{
                 print("failed to save to Firestore",err)
+                self.registeringHud.dismiss()
+                self.showHudWithError(err: err)
                 return
             }
             

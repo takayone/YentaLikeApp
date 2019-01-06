@@ -33,6 +33,9 @@
 		306689F821D79F7D00263580 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F721D79F7D00263580 /* LoginController.swift */; };
 		306689FA21D7AA4700263580 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306689F921D7AA4700263580 /* CardView.swift */; };
 		307AA58421D91BC50087A0C4 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307AA58321D91BC50087A0C4 /* Company.swift */; };
+		3097D3C921E18F780076D983 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3097D3C821E18F780076D983 /* MatchView.swift */; };
+		30B1447221DF1B490043A739 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B1447121DF1B490043A739 /* ChatMessageCell.swift */; };
+		30B1447421DF1D110043A739 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B1447321DF1D110043A739 /* Message.swift */; };
 		30B714E621DB299000EB55D7 /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B714E521DB299000EB55D7 /* DatePickerCell.swift */; };
 		30B714EC21DB57AA00EB55D7 /* SelfIntroCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B714EB21DB57AA00EB55D7 /* SelfIntroCell.swift */; };
 		30B714F221DB70A600EB55D7 /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B714F121DB70A600EB55D7 /* CustomHeaderView.swift */; };
@@ -69,6 +72,9 @@
 		306689F721D79F7D00263580 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		306689F921D7AA4700263580 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		307AA58321D91BC50087A0C4 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
+		3097D3C821E18F780076D983 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
+		30B1447121DF1B490043A739 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
+		30B1447321DF1D110043A739 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		30B714E521DB299000EB55D7 /* DatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
 		30B714EB21DB57AA00EB55D7 /* SelfIntroCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfIntroCell.swift; sourceTree = "<group>"; };
 		30B714F121DB70A600EB55D7 /* CustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
@@ -111,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				3012141421DE4C0B0084453D /* MessageCell.swift */,
+				30B1447121DF1B490043A739 /* ChatMessageCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -132,6 +139,7 @@
 				306689F921D7AA4700263580 /* CardView.swift */,
 				30103C3021DCA83200BBA230 /* CustomLikeDislikeView.swift */,
 				301213E221DDB8A00084453D /* ResultView.swift */,
+				3097D3C821E18F780076D983 /* MatchView.swift */,
 			);
 			path = MainViews;
 			sourceTree = "<group>";
@@ -222,6 +230,7 @@
 			children = (
 				306689EE21D7980F00263580 /* User.swift */,
 				307AA58321D91BC50087A0C4 /* Company.swift */,
+				30B1447321DF1D110043A739 /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -424,15 +433,18 @@
 				3012141721DE60340084453D /* MessagesController.swift in Sources */,
 				306689E021D7846E00263580 /* MainTabBarController.swift in Sources */,
 				30103C2F21DBB79000BBA230 /* BirthdayCell.swift in Sources */,
+				30B1447221DF1B490043A739 /* ChatMessageCell.swift in Sources */,
 				306689CC21D781DD00263580 /* AppDelegate.swift in Sources */,
 				306689E321D78A8300263580 /* SwipeController.swift in Sources */,
 				306689F421D799E900263580 /* SettingsController.swift in Sources */,
 				3064A31521D8E7C100BC5ADB /* UserDetailsController.swift in Sources */,
 				306689EF21D7980F00263580 /* User.swift in Sources */,
 				301213E721DDD8B40084453D /* ReportController.swift in Sources */,
+				30B1447421DF1D110043A739 /* Message.swift in Sources */,
 				3012141521DE4C0B0084453D /* MessageCell.swift in Sources */,
 				306689F621D79BDD00263580 /* CustomTextField.swift in Sources */,
 				30103C2C21DB989F00BBA230 /* RegistrationController.swift in Sources */,
+				3097D3C921E18F780076D983 /* MatchView.swift in Sources */,
 				30B714F221DB70A600EB55D7 /* CustomHeaderView.swift in Sources */,
 				301213E321DDB8A00084453D /* ResultView.swift in Sources */,
 				30C393D321DB263F00015D6E /* DefaultCell.swift in Sources */,

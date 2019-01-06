@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import JGProgressHUD
 
 class MatchingController: UITableViewController {
     
@@ -27,6 +28,7 @@ class MatchingController: UITableViewController {
         tableView.refreshControl = refreshControl
     }
     
+ 
   
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,12 +42,19 @@ class MatchingController: UITableViewController {
     
     fileprivate func fetchMatchingUsers(){
         
+        let fetchMatchingUserHud = JGProgressHUD()
+        fetchMatchingUserHud.show(in: view)
+        fetchMatchingUserHud.textLabel.text = "マッチングしたユーザーを\n検索中"
+        
         guard let currentUserUid = Auth.auth().currentUser?.uid else {return}
         let ref = Firestore.firestore().collection("matches").document(currentUserUid)
        
         ref.getDocument { (snapshots, err) in
             if let err = err{
                 print("failed to get matching document", err)
+                self.refreshControl?.endRefreshing()
+                fetchMatchingUserHud.dismiss()
+                self.showHudWithError(err: err)
                 return
             }
             
@@ -57,9 +66,13 @@ class MatchingController: UITableViewController {
                 Firestore.firestore().collection("users").document(matchingUserUid).getDocument(completion: { (snapshot, err) in
                     if let err = err{
                         print("failed to fetch matching user",err)
+                        self.refreshControl?.endRefreshing()
+                        fetchMatchingUserHud.dismiss()
+                        self.showHudWithError(err: err)
                         return
                     }
                     print("successfully fetch matching user!!")
+                    fetchMatchingUserHud.dismiss()
                     
                     guard let dictionary = snapshot?.data() else {return}
                     let user = User(dictionary: dictionary)
@@ -85,9 +98,12 @@ class MatchingController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MessageCell
+        let user = users[indexPath.row]
         cell.user = users[indexPath.row]
         return cell
     }
+    
+    
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
@@ -100,40 +116,13 @@ class MatchingController: UITableViewController {
         navigationController?.pushViewController(messagesController, animated: true)
     }
     
-//    override func viewDidLoad() {
-//
-//        collectionView.backgroundColor = .white
-//
-//        collectionView?.register(MachingHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerId")
-//
-//        setupNavigationBars()
-//    }
-//
+    fileprivate func showHudWithError(err: Error){
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Fail"
+        hud.detailTextLabel.text = err.localizedDescription
+        hud.show(in: view)
+        hud.dismiss(afterDelay: 4.0)
+    }
 
-//
-//    //header
-//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerId", for: indexPath)
-//        return header
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return CGSize(width: view.frame.width, height: 80)
-//    }
-//
-//    //mainMessges
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 10
-//    }
-//
-////    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-////
-////    }
-////
-////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-////
-////    }
-////
-//
     
 }

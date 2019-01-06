@@ -14,11 +14,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        if Auth.auth().currentUser == nil{
-//            let registrationController = RegistrationController()
-//            let navController = UINavigationController(rootViewController: registrationController)
-//            present(navController, animated: true)
-//        }
+
         if Auth.auth().currentUser == nil{
 
             DispatchQueue.main.async {

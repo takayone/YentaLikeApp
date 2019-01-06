@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import JGProgressHUD
 
 class LoginController: UIViewController {
     
@@ -43,7 +44,7 @@ class LoginController: UIViewController {
     let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .white
-        button.setTitle("Login", for: .normal)
+        button.setTitle("ログイン", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
         button.layer.cornerRadius = 22
@@ -54,18 +55,34 @@ class LoginController: UIViewController {
         return button
     }()
     
+
+    
     @objc fileprivate func handleLogin(){
+        let loginHud = JGProgressHUD()
+        loginHud.show(in: view)
+        loginHud.textLabel.text = "ログイン中"
+        
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
         Auth.auth().signIn(withEmail: email, password: password) { (res, err) in
             if let err = err{
                 print("failed to sing in")
+                loginHud.dismiss()
+                self.showHudWithError(err: err)
                 return
             }
-            
+            loginHud.dismiss()
             let mainTabController = MainTabBarController()
             self.present(mainTabController, animated: true)
         }
+    }
+    
+    fileprivate func showHudWithError(err: Error){
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Fail"
+        hud.detailTextLabel.text = err.localizedDescription
+        hud.show(in: view)
+        hud.dismiss(afterDelay: 4.0)
     }
     
     let goBackButton: UIButton = {
@@ -136,7 +153,7 @@ class LoginController: UIViewController {
         print(bottomSpace)
         
         let difference = keyboardFrame.height - bottomSpace
-        self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
+        self.view.transform = CGAffineTransform(translationX: 0, y: -difference)
     }
     
     

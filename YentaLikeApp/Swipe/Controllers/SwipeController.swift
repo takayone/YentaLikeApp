@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import JGProgressHUD
 
 class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerDelegate {
     
@@ -54,11 +55,38 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
 
         setupStatusBars()
         setupLayout()
-        fetchSwipes()
+        fetchCurrentUser()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
+    }
+    
+    
+    //現ユーザーを入れ込む
+    var user: User?
+    let fetchHud = JGProgressHUD()
+    
+    fileprivate func fetchCurrentUser(){
+        fetchHud.show(in: view)
+        fetchHud.textLabel.text = "あなたにオススメの\nユーザーを探しています"
+        
+        
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let ref = Firestore.firestore().collection("users").document(uid)
+        ref.getDocument { (snapshot, err) in
+            
+            if let err = err {
+                print("failed to fetch current user",err)
+                self.fetchHud.dismiss()
+                self.showHudWithError(err: err)
+                return
+            }
+            
+            guard let dictionary: [String: Any] = snapshot?.data() else {return}
+            self.user = User(dictionary: dictionary)
+            self.fetchSwipes()
+        }
     }
     
     
@@ -72,6 +100,8 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         ref.getDocument { (snapshot, err) in
             if let err = err{
                 print("failed to fetch current user swipe info",err)
+                self.fetchHud.dismiss()
+                self.showHudWithError(err: err)
                 return
             }
             
@@ -95,6 +125,8 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         ref.getDocuments { (allDocuments, err) in
             if let err = err{
                 print("failed to fetch users:", err)
+                self.fetchHud.dismiss()
+                self.showHudWithError(err: err)
                 return
             }
             
@@ -142,6 +174,7 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         cardDeckView.addSubview(resultView)
         cardDeckView.sendSubviewToBack(resultView)
         resultView.fillSuperview()
+        fetchHud.dismiss()
     }
 
     
@@ -273,9 +306,18 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
                 //このマッチングしたという情報をどこかに保存したいところ。。
                 //messages.uid.cardUid というものを用意して　今のユーザー⇨マッチしたユーザーのUID
                 //そしてmessages側でfetch messages currentUserid
+                self.presentMatchView(cardUID: cardUID)
                 self.saveMatchingInfoToFirestore(cardUID: cardUID)
             }
         }
+    }
+    
+    fileprivate func presentMatchView(cardUID: String) {
+        let matchView = MatchView()
+        matchView.cardUID = cardUID
+        matchView.currentUser = self.user
+        view.addSubview(matchView)
+        matchView.fillSuperview()
     }
     
     fileprivate func saveMatchingInfoToFirestore(cardUID: String) {
@@ -437,6 +479,14 @@ class SwipeController: UIViewController,CardViewDelegate, UserDetailsControllerD
         let registrationControler = RegistrationController()
         let navController = UINavigationController(rootViewController: registrationControler)
         present(navController, animated: true)
+    }
+    
+    fileprivate func showHudWithError(err: Error){
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Fail"
+        hud.detailTextLabel.text = err.localizedDescription
+        hud.show(in: view)
+        hud.dismiss(afterDelay: 4.0)
     }
     
 
